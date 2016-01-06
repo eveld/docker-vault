@@ -1,8 +1,13 @@
-FROM scratch
+FROM alpine:3.3
 
-ADD vault /vault
-ADD server.hcl /server.hcl
+ENV CONSUL_ADDR "consul:8500"
+ENV VAULT_PATH "vault"
 
 EXPOSE 8200
 
-CMD ["/vault", "server", "-config=server.hcl"]
+ADD files/vault /usr/local/bin/vault
+ADD files/*.hcl /etc/vault.d/
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod 755 /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
