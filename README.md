@@ -12,7 +12,7 @@ docker run -ti \
 
 The version of Vault is set to 0.5.1 by default, but can be overridden by passing in:
 ```
---build-arg VAULT_VERSION=x.x.x
+-e VAULT_VERSION=x.x.x
 ```
 
 Should be built automatically on Docker Hub.
