@@ -1,13 +1,26 @@
 FROM alpine:3.3
+MAINTAINER Erik Veld "erik@nauts.io"
 
-ENV CONSUL_ADDR "consul:8500"
-ENV VAULT_PATH "vault"
+# Consul configuration
+ENV CONSUL_ADDR consul:8500
+ENV CONSUL_PATH vault
+ENV CONSUL_SCHEME http
+
+# Vault version
+ARG VAULT_VERSION=0.5.1
 
 EXPOSE 8200
 
-ADD files/vault /usr/local/bin/vault
-ADD files/*.hcl /etc/vault.d/
-ADD entrypoint.sh /entrypoint.sh
+# Download and unzip Vault
+RUN apk update && \
+    apk add openssl && \
+    wget -q https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip && \
+    unzip vault_${VAULT_VERSION}_linux_amd64.zip -d /usr/local/bin && \
+    rm vault_${VAULT_VERSION}_linux_amd64.zip
+
+# Copy configuration and entrypoint
+COPY files/*.hcl /etc/vault.d/
+COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]

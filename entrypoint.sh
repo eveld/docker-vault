@@ -1,9 +1,9 @@
 #!/bin/sh
 cat > /etc/vault.d/consul.hcl <<EOF
-backend "consul" {
+ha_backend "consul" {
   address = "$CONSUL_ADDR"
-  path = "$VAULT_PATH"
-  scheme = "http"
+  path = "$CONSUL_PATH"
+  scheme = "$CONSUL_SCHEME"
 }
 EOF
 
