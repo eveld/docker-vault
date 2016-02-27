@@ -15,4 +15,6 @@ The version of Vault is set to 0.5.1 by default, but can be overridden by passin
 --build-arg VAULT_VERSION=x.x.x
 ```
 
+Should be built automatically on Docker Hub.
+
 More information about Vault can be found at [https://www.vaultproject.io](https://www.vaultproject.io).
